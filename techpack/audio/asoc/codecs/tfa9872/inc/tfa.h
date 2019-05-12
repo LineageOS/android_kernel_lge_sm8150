@@ -118,4 +118,6 @@ enum tfa98xx_error tfa_write_filters(int dev_idx, int prof_idx);
 enum tfa98xx_error tfa_buffer_pool(int index, int size, int control);
 #endif
 
+enum tfa_error tfa98xxTotfa(enum tfa98xx_error err);
+
 #endif /* TFA_H_ */
