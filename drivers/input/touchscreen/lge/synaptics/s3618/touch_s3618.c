@@ -3460,6 +3460,7 @@ static int s3618_suspend(struct device *dev)
 	case TOUCH_MINIOS_MFTS_FOLDER:
 	case TOUCH_MINIOS_MFTS_FLAT:
 	case TOUCH_MINIOS_MFTS_CURVED:
+	case TOUCH_RECOVERY_MODE:
 		if (!ts->mfts_lpwg) {
 			TOUCH_I("%s : touch_suspend - MFTS\n", __func__);
 			touch_interrupt_control(dev, INTERRUPT_DISABLE);
@@ -3469,7 +3470,6 @@ static int s3618_suspend(struct device *dev)
 		break;
 	case TOUCH_CHARGER_MODE:
 	case TOUCH_LAF_MODE:
-	case TOUCH_RECOVERY_MODE:
 		TOUCH_I("%s: Etc boot_mode(%d)!!!\n", __func__, boot_mode);
 		return -EPERM;
 	default:
@@ -3529,6 +3529,7 @@ static int s3618_resume(struct device *dev)
 	case TOUCH_MINIOS_MFTS_FOLDER:
 	case TOUCH_MINIOS_MFTS_FLAT:
 	case TOUCH_MINIOS_MFTS_CURVED:
+	case TOUCH_RECOVERY_MODE:
 		if (!ts->mfts_lpwg) {
 			touch_interrupt_control(dev, INTERRUPT_ENABLE);
 			s3618_power(dev, POWER_ON);
@@ -3543,7 +3544,6 @@ static int s3618_resume(struct device *dev)
 		break;
 	case TOUCH_CHARGER_MODE:
 	case TOUCH_LAF_MODE:
-	case TOUCH_RECOVERY_MODE:
 		TOUCH_I("%s: Etc boot_mode(%d)!!!\n", __func__, boot_mode);
 		touch_interrupt_control(dev, INTERRUPT_DISABLE);
 		s3618_power(dev, POWER_OFF);
