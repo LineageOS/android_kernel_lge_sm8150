@@ -22,7 +22,7 @@
 				type = "ext4";
 				mnt_flags = "ro,barrier=1,discard";
 				fsmgr_flags = "wait,slotselect,avb";
-				status = "ok";
+				status = "disabled";
 			};
 			product {
 				compatible = "android,product";
@@ -30,7 +30,7 @@
 				type = "ext4";
 				mnt_flags = "ro,nodev,barrier=1,errors=continue";
 				fsmgr_flags = "wait,slotselect,avb";
-				status = "ok";
+				status = "disabled";
 			};
 			OP {
 				compatible = "android,op";
@@ -39,7 +39,7 @@
 				mnt_point = "/product/OP";
 				mnt_flags = "ro,noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc";
 				fsmgr_flags = "wait,slotselect,avb,nofail";
-				status = "ok";
+				status = "disabled";
 			};
 			drm {
 				compatible = "android,drm";
@@ -48,7 +48,7 @@
 				mnt_point = "/mnt/vendor/persist-lg";
 				mnt_flags = "noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc,errors=continue";
 				fsmgr_flags = "wait,formattable";
-				status = "ok";
+				status = "disabled";
 			};
 		};
 	};
