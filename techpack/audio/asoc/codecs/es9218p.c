@@ -1869,9 +1869,7 @@ static int es9218p_sabre_bypass2hifi(void)
     }
 #endif
     es9218_set_thd(g_es9218_priv->i2c_client, g_headset_type);
-#if 0 /* CONFIG_SND_SOC_LGE_ESS_DIGITAL_FILTER*/
     es9218_sabre_cfg_custom_filter(&es9218_sabre_custom_ft[g_sabre_cf_num]);
-#endif
     es9218_write_reg(g_es9218_priv->i2c_client, ES9218P_REG_15, g_left_volume);     // set left channel digital volume level
     es9218_write_reg(g_es9218_priv->i2c_client, ES9218P_REG_16, g_right_volume);    // set right channel digital volume level
 
