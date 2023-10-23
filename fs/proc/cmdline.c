@@ -3,19 +3,35 @@
 #include <linux/init.h>
 #include <linux/proc_fs.h>
 #include <linux/seq_file.h>
+
 #ifdef CONFIG_MACH_LGE
-#include <asm/setup.h>
 #include <soc/qcom/lge/board_lge.h>
+#endif // CONFIG_MACH_LGE
+
+#if defined(CONFIG_MACH_LGE) || \
+	defined(CONFIG_INITRAMFS_IGNORE_SKIP_FLAG) || \
+    defined(CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT)
+#include <asm/setup.h>
 #include <linux/slab.h>
+#endif
+
+#if defined(CONFIG_INITRAMFS_IGNORE_SKIP_FLAG) || \
+    defined(CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT)
+#define INITRAMFS_STR_FIND "skip_initramf"
+#endif // CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT
 
 #ifdef CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
-#define INITRAMFS_STR_FIND "skip_initramf"
 #define INITRAMFS_STR_REPLACE "want_initramf"
 #define INITRAMFS_STR_LEN (sizeof(INITRAMFS_STR_FIND) - 1)
 #endif // CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
 
+#ifdef CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT
+#define ANDROID_FORCE_NORMAL_BOOT_STR "androidboot.force_normal_boot=1"
+#endif // CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT
+
 static char proc_command_line[COMMAND_LINE_SIZE];
 
+#ifdef CONFIG_MACH_LGE
 static void proc_cmdline_set(char *name, char *value)
 {
 	char *flag_pos, *flag_after;
@@ -34,22 +50,35 @@ static void proc_cmdline_set(char *name, char *value)
 		scnprintf(proc_command_line, COMMAND_LINE_SIZE, "%s %s=%s", proc_command_line, name, value);
 	}
 }
+#endif // CONFIG_MACH_LGE
 
 static void proc_command_line_init(void) {
+	char *offset_addr;
+	char *proc_command_line_tail;
+
+	strcpy(proc_command_line, saved_command_line);
 
 #ifdef CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
-	char *offset_addr;
-	strcpy(proc_command_line, saved_command_line);
 	offset_addr = strstr(proc_command_line, INITRAMFS_STR_FIND);
-	if (!offset_addr)
-		goto set_lge_bootmode;
-	memcpy(offset_addr, INITRAMFS_STR_REPLACE, INITRAMFS_STR_LEN);
-
-set_lge_bootmode:
+	if (offset_addr)
+		memcpy(offset_addr, INITRAMFS_STR_REPLACE, INITRAMFS_STR_LEN);
 #endif // CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
+
+#ifdef CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT
+	if (strstr(saved_command_line, INITRAMFS_STR_FIND)) {
+		// point proc_command_line_tail to the null terminator of the cmdline
+		proc_command_line_tail = proc_command_line + strlen(proc_command_line);
+		memcpy(proc_command_line_tail, " ", 1);
+		memcpy(proc_command_line_tail + 1, ANDROID_FORCE_NORMAL_BOOT_STR,
+                        sizeof(ANDROID_FORCE_NORMAL_BOOT_STR));
+	}
+#endif // CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT
+
+#ifdef CONFIG_MACH_LGE
 	if (lge_get_boot_mode() == LGE_BOOT_MODE_CHARGERLOGO) {
 		proc_cmdline_set("androidboot.mode", "charger");
 	}
+#endif
 }
 
 static int cmdline_proc_show(struct seq_file *m, void *v)
