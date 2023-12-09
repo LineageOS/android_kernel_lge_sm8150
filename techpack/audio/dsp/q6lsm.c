@@ -36,6 +36,10 @@
 #include <dsp/audio_cal_utils.h>
 #include "adsp_err.h"
 
+#if defined(CONFIG_MACH_LGE) && !defined(CONFIG_SND_LGE_SM6150)
+#include <soc/qcom/subsystem_restart.h>
+#endif
+
 #define APR_TIMEOUT	(HZ)
 #define LSM_ALIGN_BOUNDARY 512
 #define LSM_SAMPLE_RATE 16000
@@ -880,6 +884,12 @@ static int q6lsm_do_open_v2(struct lsm_client *client,
 			__func__, rc);
 	else
 		client->use_topology = true;
+
+#if defined(CONFIG_MACH_LGE) && !defined(CONFIG_SND_LGE_SM6150)
+	if (rc == -ETIMEDOUT || rc == -ENODATA)
+		subsystem_restart("adsp");
+#endif
+
 unlock:
 	mutex_unlock(&lsm_common.cal_data[LSM_TOP_IDX]->lock);
 done:
