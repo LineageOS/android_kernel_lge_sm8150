@@ -28,7 +28,11 @@
 #define SDE_DBG_BASE_MAX		10
 
 #define DEFAULT_PANIC		1
+#if IS_ENABLED(CONFIG_LGE_DISPLAY_XLOG_ENABLED)
+#define DEFAULT_REGDUMP		SDE_DBG_DUMP_IN_LOG
+#else
 #define DEFAULT_REGDUMP		SDE_DBG_DUMP_IN_MEM
+#endif
 #define DEFAULT_DBGBUS_SDE	SDE_DBG_DUMP_IN_MEM
 #define DEFAULT_DBGBUS_VBIFRT	SDE_DBG_DUMP_IN_MEM
 #define DEFAULT_BASE_REG_CNT	0x100
@@ -5127,14 +5131,11 @@ int sde_dbg_debugfs_register(struct device *dev)
 
 	return 0;
 }
-
 #else
-
 int sde_dbg_debugfs_register(struct device *dev)
 {
 	return 0;
 }
-
 #endif
 
 static void _sde_dbg_debugfs_destroy(void)
@@ -5162,6 +5163,8 @@ void sde_dbg_init_dbg_buses(u32 hwversion)
 		dbg->dbgbus_vbif_rt.cmn.enable_mask = DEFAULT_DBGBUS_VBIFRT;
 		dbg->dbgbus_dsi.entries = NULL;
 		dbg->dbgbus_dsi.size = 0;
+		dbg->dbgbus_vbif_rt.cmn.name = DBGBUS_NAME_VBIF_RT;
+		dbg->dbgbus_vbif_rt.cmn.enable_mask = DEFAULT_DBGBUS_VBIFRT;
 	} else if (IS_SDM845_TARGET(hwversion) || IS_SDM670_TARGET(hwversion)) {
 		dbg->dbgbus_sde.entries = dbg_bus_sde_sdm845;
 		dbg->dbgbus_sde.cmn.entries_size =
@@ -5178,6 +5181,8 @@ void sde_dbg_init_dbg_buses(u32 hwversion)
 		dbg->dbgbus_vbif_rt.cmn.enable_mask = DEFAULT_DBGBUS_VBIFRT;
 		dbg->dbgbus_dsi.entries = dsi_dbg_bus_sdm845;
 		dbg->dbgbus_dsi.size = ARRAY_SIZE(dsi_dbg_bus_sdm845);
+		dbg->dbgbus_vbif_rt.cmn.name = DBGBUS_NAME_VBIF_RT;
+		dbg->dbgbus_vbif_rt.cmn.enable_mask = DEFAULT_DBGBUS_VBIFRT;
 	} else if (IS_SM8150_TARGET(hwversion) || IS_SM6150_TARGET(hwversion) ||
 				IS_SDMMAGPIE_TARGET(hwversion) ||
 				IS_SDMTRINKET_TARGET(hwversion) ||

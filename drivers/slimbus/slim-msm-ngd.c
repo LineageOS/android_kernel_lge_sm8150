@@ -1408,6 +1408,7 @@ hw_init_retry:
 				retries++;
 				goto hw_init_retry;
 			}
+			panic("SLIM power req failed : please contact to ALPHA-BSP-AUDIO@lge.com");
 			return ret;
 		}
 	}

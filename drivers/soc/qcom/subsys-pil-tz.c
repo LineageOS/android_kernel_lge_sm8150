@@ -846,6 +846,10 @@ static struct pil_reset_ops pil_ops_trusted = {
 	.deinit_image = pil_deinit_image_trusted,
 };
 
+#ifdef CONFIG_LGE_HANDLE_PANIC
+int qct_wcnss_crash;
+#endif
+
 static void log_failure_reason(const struct pil_tz_data *d)
 {
 	size_t size;
@@ -868,6 +872,11 @@ static void log_failure_reason(const struct pil_tz_data *d)
 
 	strlcpy(reason, smem_reason, min(size, (size_t)MAX_SSR_REASON_LEN));
 	pr_err("%s subsystem failure reason: %s.\n", name, reason);
+
+#ifdef CONFIG_LGE_HANDLE_PANIC
+	if(strstr(name, "modem") && strstr(reason, "wlan_process:1"))
+		qct_wcnss_crash = 1;
+#endif
 }
 
 static int subsys_shutdown(const struct subsys_desc *subsys, bool force_stop)

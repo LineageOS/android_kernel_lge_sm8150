@@ -2425,6 +2425,19 @@ bail:
 	return err;
 }
 
+static int fastrpc_kstat(const char *filename, struct kstat *stat)
+{
+	int result;
+	mm_segment_t fs_old;
+
+	fs_old = get_fs();
+	set_fs(KERNEL_DS);
+	result = vfs_stat((const char __user *)filename, stat);
+	set_fs(fs_old);
+
+	return result;
+}
+
 static int fastrpc_get_info_from_dsp(struct fastrpc_file *fl,
 				uint32_t *dsp_attr_buf,
 				uint32_t dsp_attr_buf_len,
@@ -2434,13 +2447,20 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_file *fl,
 	struct fastrpc_ioctl_invoke_crc ioctl;
 	remote_arg_t ra[2];
 	struct fastrpc_apps *me = &gfa;
+	struct kstat sb;
 
 	// Querying device about DSP support
 	switch (domain) {
 	case ADSP_DOMAIN_ID:
+		if (!fastrpc_kstat("/dev/subsys_adsp", &sb))
+			dsp_support = 1;
+		break;
 	case SDSP_DOMAIN_ID:
+		if (!fastrpc_kstat("/dev/subsys_slpi", &sb))
+			dsp_support = 1;
+		break;
 	case CDSP_DOMAIN_ID:
-		if (me->channel[domain].issubsystemup)
+		if (!fastrpc_kstat("/dev/subsys_cdsp", &sb))
 			dsp_support = 1;
 		break;
 	case MDSP_DOMAIN_ID:
@@ -4578,6 +4598,7 @@ static int fastrpc_probe(struct platform_device *pdev)
 		if (range.addr && !of_property_read_bool(dev->of_node,
 							 "restrict-access")) {
 			int srcVM[1] = {VMID_HLOS};
+#ifndef CONFIG_MACH_LGE			
 			int destVM[3] = {VMID_HLOS, VMID_SSC_Q6,
 						VMID_ADSP_Q6};
 			int destVMperm[3] = {PERM_READ | PERM_WRITE | PERM_EXEC,
@@ -4587,6 +4608,18 @@ static int fastrpc_probe(struct platform_device *pdev)
 
 			VERIFY(err, !hyp_assign_phys(range.addr, range.size,
 					srcVM, 1, destVM, destVMperm, 3));
+#else
+			int destVM[4] = {VMID_HLOS, VMID_MSS_MSA, VMID_SSC_Q6,
+						VMID_ADSP_Q6};
+			int destVMperm[4] = {PERM_READ | PERM_WRITE | PERM_EXEC,
+				PERM_READ | PERM_WRITE | PERM_EXEC,
+				PERM_READ | PERM_WRITE | PERM_EXEC,
+				PERM_READ | PERM_WRITE | PERM_EXEC,
+				};
+
+			VERIFY(err, !hyp_assign_phys(range.addr, range.size,
+					srcVM, 1, destVM, destVMperm, 4));
+#endif					
 			if (err)
 				goto bail;
 			me->range.addr = range.addr;

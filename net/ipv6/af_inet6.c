@@ -114,8 +114,12 @@ void inet6_sock_destruct(struct sock *sk)
 }
 EXPORT_SYMBOL_GPL(inet6_sock_destruct);
 
+#ifdef CONFIG_LGP_DATA_TCPIP_MPTCP
+int inet6_create(struct net *net, struct socket *sock, int protocol, int kern)
+#else
 static int inet6_create(struct net *net, struct socket *sock, int protocol,
 			int kern)
+#endif
 {
 	struct inet_sock *inet;
 	struct ipv6_pinfo *np;

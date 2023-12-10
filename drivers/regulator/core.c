@@ -34,6 +34,9 @@
 #include <linux/regulator/driver.h>
 #include <linux/regulator/machine.h>
 #include <linux/module.h>
+#ifdef CONFIG_PROC_FS
+#include  <linux/proc_fs.h>
+#endif
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/regulator.h>
@@ -320,6 +323,14 @@ static int regulator_mode_constrain(struct regulator_dev *rdev,
 	case REGULATOR_MODE_NORMAL:
 	case REGULATOR_MODE_IDLE:
 	case REGULATOR_MODE_STANDBY:
+#if IS_ENABLED(CONFIG_LGE_DISPLAY_COMMON)
+	case REGULATOR_MODE_SHUTDOWN:
+	case REGULATOR_MODE_SPARE_ON:
+	case REGULATOR_MODE_TTW_ON:
+	case REGULATOR_MODE_TTW_OFF:
+	case REGULATOR_MODE_ENABLE_PULLDOWN:
+	case REGULATOR_MODE_DISABLE_PULLDOWN:
+#endif
 		break;
 	default:
 		rdev_err(rdev, "invalid mode %x specified\n", *mode);
@@ -1287,7 +1298,7 @@ static void unset_regulator_supplies(struct regulator_dev *rdev)
 	}
 }
 
-#ifdef CONFIG_DEBUG_FS
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 static ssize_t constraint_flags_read_file(struct file *file,
 					  char __user *user_buf,
 					  size_t count, loff_t *ppos)
@@ -1329,7 +1340,7 @@ static ssize_t constraint_flags_read_file(struct file *file,
 #endif
 
 static const struct file_operations constraint_flags_fops = {
-#ifdef CONFIG_DEBUG_FS
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 	.open = simple_open,
 	.read = constraint_flags_read_file,
 	.llseek = default_llseek,
@@ -4000,8 +4011,7 @@ static struct class regulator_class = {
 	.dev_groups = regulator_dev_groups,
 };
 
-#ifdef CONFIG_DEBUG_FS
-
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 static int reg_debug_enable_set(void *data, u64 val)
 {
 	struct regulator *regulator = data;
@@ -4739,7 +4749,7 @@ void *regulator_get_init_drvdata(struct regulator_init_data *reg_init_data)
 }
 EXPORT_SYMBOL_GPL(regulator_get_init_drvdata);
 
-#ifdef CONFIG_DEBUG_FS
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 static int supply_map_show(struct seq_file *sf, void *data)
 {
 	struct regulator_map *map;
@@ -4760,7 +4770,7 @@ static int supply_map_open(struct inode *inode, struct file *file)
 #endif
 
 static const struct file_operations supply_map_fops = {
-#ifdef CONFIG_DEBUG_FS
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 	.open = supply_map_open,
 	.read = seq_read,
 	.llseek = seq_lseek,
@@ -4768,7 +4778,7 @@ static const struct file_operations supply_map_fops = {
 #endif
 };
 
-#ifdef CONFIG_DEBUG_FS
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 struct summary_data {
 	struct seq_file *s;
 	struct regulator_dev *parent;
@@ -4885,7 +4895,7 @@ static int regulator_summary_open(struct inode *inode, struct file *file)
 #endif
 
 static const struct file_operations regulator_summary_fops = {
-#ifdef CONFIG_DEBUG_FS
+#if defined(CONFIG_DEBUG_FS) || defined(CONFIG_PROC_FS)
 	.open		= regulator_summary_open,
 	.read		= seq_read,
 	.llseek		= seq_lseek,
@@ -4909,6 +4919,9 @@ static int __init regulator_init(void)
 	debugfs_create_file("regulator_summary", 0444, debugfs_root,
 			    NULL, &regulator_summary_fops);
 
+#ifdef CONFIG_PROC_FS
+	proc_create("regulator_summary", 0444, NULL, &regulator_summary_fops);
+#endif
 	regulator_dummy_init();
 
 	return ret;
