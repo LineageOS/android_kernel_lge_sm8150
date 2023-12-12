@@ -3324,7 +3324,7 @@ bail:
 	return rc;
 }
 #if IS_ENABLED(CONFIG_LGE_COVER_DISPLAY) || IS_ENABLED(CONFIG_LGE_DUAL_SCREEN)
-bool is_dp_connected()
+bool is_dp_connected(void)
 {
 	struct dp_display* dp_display;
 	struct dp_display_private *dp;
