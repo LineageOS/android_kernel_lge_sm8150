@@ -40,7 +40,7 @@
 #include <linux/uaccess.h>
 #include <linux/async.h>
 #include <asm/atomic.h>
-#include "tspdrv.h"
+#include <uapi/linux/tspdrv.h>
 
 static int g_nTimerPeriodMs = 5; /* 5ms timer by default. This variable could be used by the SPI.*/
 
