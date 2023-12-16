@@ -1021,6 +1021,7 @@ static int s3618_report_lpwg(struct device *dev)
 			ts->intr_status = TOUCH_IRQ_LPWG_LONGPRESS_DOWN;
 #endif
 			d->longpress_uevent_status = ts->intr_status;
+			sysfs_notify(&ts->kobj, NULL, "udfps_pressed");
 			break;
 		case DETECT_LONG_PRESS_UP:
 			ret = s3618_get_lpwg_data(dev, 1);
@@ -4336,6 +4337,14 @@ static ssize_t store_onetap(struct device *dev,
 	return count;
 }
 
+int udfps_pressed_status = 0;
+
+static ssize_t show_udfps_pressed(struct device *dev, char *buf)
+{
+	return scnprintf(buf, PAGE_SIZE, "%d\n", udfps_pressed_status);
+}
+
+static TOUCH_ATTR(udfps_pressed, show_udfps_pressed, NULL);
 static TOUCH_ATTR(reset_ctrl, NULL, store_reset_ctrl);
 static TOUCH_ATTR(gpio_pin, show_gpio_pin, NULL);
 static TOUCH_ATTR(lpwg_abs, show_lpwg_abs, store_lpwg_abs);
@@ -4350,6 +4359,7 @@ static struct attribute *s3618_attribute_list[] = {
 	&touch_attr_ai_pick.attr,
 	&touch_attr_longpress.attr,
 	&touch_attr_onetap.attr,
+	&touch_attr_udfps_pressed.attr,
 	NULL,
 };
 

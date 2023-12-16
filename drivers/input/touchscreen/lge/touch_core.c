@@ -751,6 +751,10 @@ char *uevent_str[TOUCH_UEVENT_SIZE][2] = {
 	{"TOUCH_GESTURE_WAKEUP=LONG_UP_AROUND", NULL},
 };
 
+#ifdef CONFIG_LGE_TOUCH_SYNAPTICS_S3618
+extern int udfps_pressed_status;
+#endif
+
 void touch_send_uevent(struct touch_core_data *ts, int type)
 {
 	TOUCH_TRACE();
@@ -826,6 +830,16 @@ void touch_send_uevent(struct touch_core_data *ts, int type)
 			input_report_key(ts->input, KEY_GESTURE_SWIPE_RIGHT2, 0);
 			input_sync(ts->input);
 			break;
+#ifdef CONFIG_LGE_TOUCH_SYNAPTICS_S3618
+		case TOUCH_UEVENT_LPWG_LONGPRESS_DOWN:
+			TOUCH_I("Touch UDFPS DOWN reported\n");
+			udfps_pressed_status = 1;
+			break;
+		case TOUCH_UEVENT_LPWG_LONGPRESS_UP:
+			TOUCH_I("Touch UDFPS UP reported\n");
+			udfps_pressed_status = 0;
+			break;
+#endif
 		default:
 			break;
 	}
