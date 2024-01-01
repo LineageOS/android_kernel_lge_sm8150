@@ -418,60 +418,6 @@
 				qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
 				qcom,mdss-dsi-h-sync-pulse = <0>;
 			};
-			timing-fake30Hz@1{
-				qcom,partial-update-enabled = "single_roi";
-				qcom,panel-roi-alignment = <1080 4 1080 4 1080 4>;
-				qcom,display-topology = <1 0 1>;
-				qcom,default-topology-index = <0>;
-				qcom,mdss-dsi-panel-phy-timings = [00 21 08 08 25 22 09 08 06 03 04 00 1B 18];
-				qcom,mdss-dsi-panel-clockrate = <1056619200>;
-				qcom,mdss-dsi-panel-framerate = <60>;
-				qcom,mdss-dsi-panel-width = <1080>;
-				qcom,mdss-dsi-panel-height = <2340>;
-				qcom,mdss-dsi-h-front-porch = <28>;
-				qcom,mdss-dsi-h-back-porch = <36>;
-				qcom,mdss-dsi-h-pulse-width = <4>;
-				qcom,mdss-dsi-h-sync-skew = <0>;
-				qcom,mdss-dsi-v-back-porch = <4>;
-				qcom,mdss-dsi-v-front-porch = <12>;
-				qcom,mdss-dsi-v-pulse-width = <4>;
-				qcom,mdss-dsi-h-left-border = <0>;
-				qcom,mdss-dsi-h-right-border = <0>;
-				qcom,mdss-dsi-v-top-border = <0>;
-				qcom,mdss-dsi-v-bottom-border = <0>;
-				qcom,mdss-mdp-transfer-time-us = <15200>;
-				lge,mdss-dsi-panel-framerate-div = <2>;
-
-				qcom,mdss-dsi-on-command = [
-					15 01 00 00 00 00 02 B0 00
-					39 01 00 00 00 00 3A BB 59 C8 C8 C8 C8 C8 C8 C8 C8 C8 4A 48 46 44 42 40 3E 3C 3A 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 00 00 42 04 69 5A 69 5A 20 0F FD 0F FF 0F FF 0F FF 14
-					39 01 00 00 00 00 43 CE C1 1C F4 F0 FF EF 0A 0A 14 EF D3 EF DC E0 2B FE EB 03 00 FB F5 F5 E5 FF B6 97 E4 B6 97 3C 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 08
-					39 01 00 00 00 00 0A D1 09 30 02 1C 26 1D 4E 1E 00
-					15 01 00 00 00 00 02 B0 80
-					39 01 00 00 00 00 95 D3 01 FF FF FF FF FF FF FF FF FF FF FF FF 00 03 0C 1E 38 5B 89 C0 FF 00 03 0C 1E 38 5B 89 C0 FF 00 03 0C 1E 38 5B 89 C0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF EA FB FB FB F5 FB FB F5 F0 F8 F8 F0 ED F0 F0 ED FF FF FF FF FE FE FE FE FD FD FD FD FC FC FC FC D6 FF C4 5B 5E 61 64 67 6A 6D 70 73 76 79 7B 7C 7E 7F 7F 80 5B 5E 61 64 67 6A 6D 70 73 76 79 7B 7C 7E 7F 7F 80 5B 5E 61 64 67 6A 6D 70 73 76 79 7B 7C 7E 7F 7F 80 17 BB 02 D0 00 08
-					39 01 00 00 00 00 87 E2 63 00 EE 00 FF 00 FF FF FF 00 FF 00 00 00 FF 00 00 00 FF FF FF FF 02 1C 08 3A 02 00 02 1C A7 DA 01 F4 07 DA 01 D8 07 F6 01 D8 A7 F6 01 BC 08 12 01 BC 08 3A 01 BC A8 3A 01 BC 08 62 01 D8 08 7E 01 D8 A8 7E 01 F4 08 9A 02 1C 08 9A 12 1C F7 DA 02 44 07 DA 02 60 07 F6 12 60 F7 F6 02 7C 08 12 02 7C 08 3A 12 7C F8 3A 02 7C 08 62 02 60 08 7E 12 60 F8 7E 02 44 08 9A 02 1C 08 9A 03 02 1C 08 3A 00 00 00 00 00
-					39 01 00 00 00 00 0B E1 01 00 21 1A 0F FF 04 04 42 02
-					39 01 00 00 00 00 1F B6 42 34 01 05 00 00 09 23 07 30 09 23 02 1C 01 F4 00 00 00 00 01 0E 01 0E 00 00 02 3B 58 0C
-					39 01 00 00 00 00 5C DF 57 50 00 00 00 00 00 10 2E 32 28 A0 AA AA A0 AA AA A0 00 00 00 00 03 84 00 09 00 6A 35 3E 00 00 51 50 00 00 60 07 60 07 00 60 01 00 00 00 00 00 00 00 00 00 00 00 04 30 00 00 00 00 00 00 00 00 4C 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA AA 0A AA AA 0A 0B
-					15 01 00 00 00 00 02 E6 00
-					15 01 00 00 00 00 02 B0 03
-					15 01 00 00 00 00 02 35 00
-					39 01 00 00 00 00 05 2A 00 00 04 37
-					39 01 00 00 00 00 05 2B 00 00 09 23
-					05 01 00 00 00 00 01 29
-					05 01 00 00 96 00 01 11
-				];
-				qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
-
-				qcom,mdss-dsi-off-command = [
-					15 01 00 00 00 00 02 B0 03
-					39 01 00 00 5A 00 03 51 00 00
-					05 01 00 00 00 00 01 28
-					05 01 00 00 96 00 01 10
-				];
-				qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
-				qcom,mdss-dsi-h-sync-pulse = <0>;
-			};
 		};
 	};
 };
