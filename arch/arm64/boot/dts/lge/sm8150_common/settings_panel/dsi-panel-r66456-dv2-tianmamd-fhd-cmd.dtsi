@@ -274,7 +274,7 @@
 			15 01 00 00 14 00 02 55 00
 			15 01 00 00 14 00 02 53 00
 		];
-		lge,mdss-dsi-ace-cmmand-state = "dsi_hs_mode";
+		lge,mdss-dsi-ace-command-state = "dsi_hs_mode";
 		lge,ace-lut = [
 			39 01 00 00 00 00 0C BC 33 25 FF 2B 19 22 53 C0 00 00 00
 			39 01 00 00 00 00 0C BC 3B 45 CD 2B 19 59 03 C0 00 00 00

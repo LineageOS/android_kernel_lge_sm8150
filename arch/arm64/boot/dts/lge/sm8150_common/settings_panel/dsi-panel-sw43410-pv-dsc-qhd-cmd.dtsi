@@ -351,7 +351,7 @@
 			39 00 00 00 00 00 21 C2 B8 A6 A6 A6 A5 A4 A1 9F 9C 98 94 92 8F 8D 8A 88 85 84 83 82 81 81 80 80 80 80 80 80 80 80 80 80
 			15 01 00 00 00 00 02 B0 CA
 		];
-		lge,mdss-dsi-ace-cmmand-state = "dsi_hs_mode";
+		lge,mdss-dsi-ace-command-state = "dsi_hs_mode";
 
 		/* Video Enahnacement */
 		lge,mdss-dsi-ve-on-command = [
