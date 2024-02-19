@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfac5768_15cfca69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31496
+      },
+      "writtenOn": "2024-02-19T17:56:30Z",
+      "side": 1,
+      "message": "Non-squashed tree: https://github.com/lge-qcom-dev/android_kernel_lge_sm8150/tree/lineage-20-merge-common-20240219",
+      "revId": "8b7053937545ee67481a9a39dd7a48f3130c9ca9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
