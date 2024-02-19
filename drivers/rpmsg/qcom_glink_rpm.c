@@ -359,6 +359,8 @@ static struct platform_driver glink_rpm_driver = {
 		.of_match_table = glink_rpm_of_match,
 #ifdef CONFIG_LGE_PM
 		.pm				= &glink_rpm_pm_ops,
+#else
+		.pm = &glink_native_pm_ops,
 #endif
 	},
 };
