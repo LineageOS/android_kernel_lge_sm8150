@@ -23,7 +23,7 @@
 
 bool g_cpFused = false;
 
-static u32 qfprom_hw_key_read() {
+static u32 qfprom_hw_key_read(void) {
 	void __iomem *value_addr = NULL;
 	u32 value = 0;
 
@@ -173,7 +173,7 @@ void check_cp_fused(const char* buf) {
 	}
 }
 
-bool check_if_sbl_fuse_is_loaded() {
+bool check_if_sbl_fuse_is_loaded(void) {
 	if (!is_sbl_fuse_included() && !is_ap_fused() && is_cp_fused()) {
 		return true;
 	}
