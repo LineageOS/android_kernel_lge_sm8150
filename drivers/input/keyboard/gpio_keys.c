@@ -239,7 +239,7 @@ struct usbpd_svid_handler *find_hallic_svid_handler(int svid) {
    return NULL;
 }
 
-int get_global_luke_status()
+int get_global_luke_status(void)
 {
 	return global_luke_status;
 }

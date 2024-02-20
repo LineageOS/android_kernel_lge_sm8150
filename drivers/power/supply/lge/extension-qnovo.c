@@ -397,7 +397,7 @@ static bool set_pt_manager(struct qnovo *chip, unsigned long en)
 	return true;
 }
 
-static int qnovo_skew_set()
+static int qnovo_skew_set(void)
 {
 	int rc = 0;
 	union power_supply_propval pval = {0, };
@@ -420,7 +420,7 @@ static int qnovo_skew_set()
 	return rc;
 }
 
-static int qnovo_skew_reset()
+static int qnovo_skew_reset(void)
 {
 	int rc = 0;
 	union power_supply_propval pval = {0, };

@@ -183,7 +183,7 @@ void dd_gpio_selection(int dd_hpd, int flip)
 #endif
 
 #ifdef CONFIG_LATTICE_ICE40
-void dd_lattice_disable()
+void dd_lattice_disable(void)
 {
 	ice40_disable(global_ice40);
 }

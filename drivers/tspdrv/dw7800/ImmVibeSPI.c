@@ -933,7 +933,7 @@ IMMVIBESPIAPI int ImmVibeSPI_ForceOut_BufferFull(void)
     return fifo > DW7800_FIFOFULL_TARGET;
 }
 
-IMMVIBESPIAPI bool i2c_probe_success()
+IMMVIBESPIAPI bool i2c_probe_success(void)
 {
 	return is_i2c_probe_success;
 }

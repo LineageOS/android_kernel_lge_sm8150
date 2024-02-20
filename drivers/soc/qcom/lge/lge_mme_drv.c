@@ -149,7 +149,7 @@ static int mme_gpio_init(struct device *dev)
     return ret;
 }
 
-static int mme_gpio_remove()
+static int mme_gpio_remove(void)
 {
     if (gpio_sleep_n != -1)
         gpio_free(gpio_sleep_n);
