@@ -3338,7 +3338,7 @@ EXPORT_SYMBOL(is_dp_connected);
 #endif
 
 #if IS_ENABLED(CONFIG_LGE_COVER_DISPLAY)
-bool is_dd_connected()
+bool is_dd_connected(void)
 {
 	struct dp_display* dp_display;
 	struct dp_display_private *dp;

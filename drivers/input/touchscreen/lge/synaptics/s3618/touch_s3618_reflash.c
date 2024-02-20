@@ -2104,7 +2104,7 @@ reset:
 	return ret;
 }
 
-static int reflash_do_reflash()
+static int reflash_do_reflash(void)
 {
 	struct s3618_data *d = reflash_hcd->d;
 	int ret = 0;
