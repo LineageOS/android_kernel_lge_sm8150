@@ -29,7 +29,12 @@
 #ifndef _TSPDRV_H
 #define _TSPDRV_H
 
+#ifdef __KERNEL__
+#include "ioctl.h"
+#else // not __KERNEL__
 #include <sys/ioctl.h>
+#endif // __KERNEL__
+
 
 /* Constants */
 #define MODULE_NAME                         "tspdrv"
