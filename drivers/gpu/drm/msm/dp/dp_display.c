@@ -3358,7 +3358,7 @@ bool is_dd_connected()
 }
 EXPORT_SYMBOL(is_dd_connected);
 
-bool is_dd_display_recovery_working()
+bool is_dd_display_recovery_working(void)
 {
 	struct dp_display* dp_display;
 	struct dp_display_private *dp;
@@ -3378,7 +3378,7 @@ bool is_dd_display_recovery_working()
 }
 EXPORT_SYMBOL(is_dd_display_recovery_working);
 
-bool is_dd_powermode()
+bool is_dd_powermode(void)
 {
 	struct dp_display* dp_display;
 	struct dp_display_private *dp;
