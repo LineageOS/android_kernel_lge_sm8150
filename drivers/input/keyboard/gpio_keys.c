@@ -254,7 +254,7 @@ void set_mcu_fw_status(int status)
 		cancel_delayed_work_sync(&cover_fw_update_timeout_work);
 }
 
-int get_mcu_fw_status() {
+int get_mcu_fw_status(void) {
 	return mcu_fw_update_status;
 }
 
