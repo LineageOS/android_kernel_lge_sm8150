@@ -16,6 +16,24 @@
       "message": "Fix is fine, specific to CONFIG_LGE_COVER_DISPLAY so it only affects flashlm.\n\nPlease leave a Verified+1 if you think this is ready to be merged.",
       "revId": "2ad903d6f118c023135b4004c0706093eccc1894",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3fea5c8_7940465b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33662
+      },
+      "writtenOn": "2024-04-18T15:33:32Z",
+      "side": 1,
+      "message": "well that explain. I\u0027ll update the commit message then",
+      "parentUuid": "28df7575_46ea097f",
+      "revId": "2ad903d6f118c023135b4004c0706093eccc1894",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
