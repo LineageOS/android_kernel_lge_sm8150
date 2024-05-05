@@ -1175,6 +1175,7 @@ static ssize_t set_forced_ess_custom_filter(struct device *dev,
 
 	if ( es9218_power_state < ESS_PS_HIFI ) {
 		pr_err("%s() : invalid state = %s\n", __func__, power_state[es9218_power_state]);
+		kfree(received_data);
 		return -EINVAL;
 	}
 
@@ -1182,6 +1183,7 @@ static ssize_t set_forced_ess_custom_filter(struct device *dev,
 	while ((datatoken = strsep(&received_data, delimiter)) != NULL && i < MAX_FILTER_DATA_SIZE) {
 		if (kstrtoint(datatoken, 10, &filter_data[i]) != 0) {
 			pr_err("Failed to convert filter data!");
+		        kfree(received_data);
 			return -EINVAL;
 		}
 		i++;
