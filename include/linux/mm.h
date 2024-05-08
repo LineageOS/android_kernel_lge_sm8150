@@ -2588,6 +2588,7 @@ static inline struct page *follow_page(struct vm_area_struct *vma,
 #define FOLL_REMOTE	0x2000	/* we are working on non-current tsk/mm */
 #define FOLL_COW	0x4000	/* internal GUP flag */
 #define FOLL_ANON	0x8000	/* don't do file mappings */
+#define FOLL_CMA	0x80000 /* migrate if the page is from cma pageblock */
 
 static inline int vm_fault_to_errno(int vm_fault, int foll_flags)
 {
@@ -2649,6 +2650,11 @@ static inline bool want_init_on_free(void)
 	return static_branch_unlikely(&init_on_free) &&
 	       !page_poisoning_enabled();
 }
+
+long get_user_pages_foll_cma(struct task_struct *tsk, struct mm_struct *mm,
+		unsigned long start, unsigned long nr_pages,
+		int write, int force, struct page **pages,
+		struct vm_area_struct **vmas);
 
 #ifdef CONFIG_DEBUG_PAGEALLOC
 extern bool _debug_pagealloc_enabled;
