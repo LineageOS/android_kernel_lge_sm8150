@@ -4252,6 +4252,25 @@ static ssize_t store_longpress(struct device *dev,
 
 	mutex_lock(&ts->lock);
 
+	/*
+		Sometimes longpress is enabled when the panel is in deep sleep.
+		We need to enable the panel in this case.
+
+		Construct parameters based on what LPWG_UPDATE_ALL sets in s3618_lpwg().
+		We need these to be what is currently set in order to not break other things, i.e. double tap.
+	*/
+	int lpwg_param[4] = {
+		d->lpwg.mode,
+		d->lpwg.screen,
+		d->lpwg.sensor,
+		d->lpwg.qcover
+	};
+	ret = s3618_lpwg(dev, LPWG_UPDATE_ALL, longpress_enable_code);
+	if (ret < 0) {
+		TOUCH_E("s3618_lpwg() failed (ret: %d)\n", ret);
+		mutex_unlock(&ts->lock);
+		return count;
+	}
 	ret = s3618_lpwg_longpress_enable(dev, d->lpwg_longpress.enable);
 	if (ret < 0)
 		TOUCH_E("failed to set lpwg_longpress enable (ret: %d)\n", ret);
