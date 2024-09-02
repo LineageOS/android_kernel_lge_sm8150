@@ -2368,8 +2368,12 @@ static int s3618_lpwg_longpress_enable(struct device *dev, int enable)
 	TOUCH_TRACE();
 
 	if (atomic_read(&ts->state.sleep) == IC_DEEP_SLEEP) {
-		TOUCH_I("%s : the function is skipped, because IC_DEEP_SLEEP\n", __func__);
-		return 0;
+		TOUCH_I("%s: force wake IC by longpress\n", __func__);
+		ret = s3618_sleep_control(dev, IC_NORMAL);
+		if (ret < 0) {
+			TOUCH_E("failed to set sleep_control (ret: %d)\n", ret);
+			goto error;
+		}
 	}
 
 	// Do not skip "d->lcd_mode == LCD_MODE_U3" condition for lpwg_mode partial settings
