@@ -3436,7 +3436,7 @@ static void tfa98xx_interrupt(struct work_struct *work)
 				err = tfa98xx_tfa_start
 					(tfa98xx, tfa98xx_profile,
 					tfa98xx_vsteps);
-				if (err != TFA98XX_ERROR_OK)
+				if (err != tfa_error_ok)
 					pr_err("Error loading i2c registers (tfa_start), err=%d\n",
 						err);
 				else
